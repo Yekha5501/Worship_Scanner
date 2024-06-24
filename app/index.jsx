@@ -1,9 +1,7 @@
-import { View, Text } from 'react-native';
+// app/index.jsx
+import React from 'react';
+import { Redirect } from 'expo-router';
 
-export default function Index() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Welcome to the Home Page!</Text>
-    </View>
-  );
+export default function Home() {
+  return <Redirect href="/auth/login" />;
 }

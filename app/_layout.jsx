@@ -1,12 +1,21 @@
-import { View, Text } from 'react-native';
-import { Stack } from 'expo-router';
+// app/_layout.jsx
+import React from 'react';
+import { Redirect, Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 
-export default function Layout() {
+const Layout = () => {
   return (
-    <View style={{ flex: 1 }}>
-      <Stack>
+    <>
+      <StatusBar style="auto" />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="auth" options={{ headerShown: false }} />
+        <Stack.Screen name="scanner" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
+         <Stack.Screen name="tabs" options={{ headerShown: false }} />
+         
       </Stack>
-    </View>
+    </>
   );
-}
+};
+
+export default Layout;
