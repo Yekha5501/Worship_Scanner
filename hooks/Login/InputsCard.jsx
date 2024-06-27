@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import tw from '../../lib/tailwind';
 import { Redirect } from 'expo-router';
@@ -6,7 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const InputsCard = () => {
+const InputsCard = React.memo(() => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -22,25 +22,26 @@ const InputsCard = () => {
     checkLoginStatus();
   }, []);
 
-  const handleLogin = async () => {
+  const handleLogin = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.post('https://24b5-102-70-6-135.ngrok-free.app/api/login', {
+      const response = await axios.post('https://f6f6-105-234-166-13.ngrok-free.app/api/login', {
         email,
         password,
       });
 
       if (response.data.token) {
         await AsyncStorage.setItem('userToken', response.data.token);
-        console.log('Token stored in AsyncStorage:', response.data.token);
-        setLoggedIn(true); // Set loggedIn to true after successful login
+        setLoggedIn(true);
       }
     } catch (error) {
       Alert.alert('Login Failed', 'Invalid email or password');
     } finally {
       setLoading(false);
+      setEmail('');
+      setPassword('');
     }
-  };
+  }, [email, password]);
 
   if (loggedIn) {
     return <Redirect href="/tabs/home" />;
@@ -94,6 +95,6 @@ const InputsCard = () => {
       </View>
     </View>
   );
-};
+});
 
 export default InputsCard;

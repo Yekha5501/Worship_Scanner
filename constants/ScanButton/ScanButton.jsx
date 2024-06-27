@@ -22,10 +22,7 @@ const ScanButton = () => {
         onPress={handlePress}
       >
         <View style={tw`w-full h-full bg-cover bg-center rounded-full`}>
-          <Image
-            source={{ uri: 'https://kingsremovals.com.au/wp-content/uploads/2019/04/blue-whitish-background-moving-boxes-1400x1025-1024x750.png' }}
-            style={tw`w-full h-full rounded-full`}
-          />
+          
         </View>
         <Text style={tw`absolute  right-0 bottom-0 text-2xl font-bold mr-9 mb-11`}>Scan</Text>
       </TouchableOpacity>

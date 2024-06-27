@@ -8,6 +8,7 @@ const QRCodeScanner = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState(null);
+  const [scannedData, setScannedData] = useState(null); // State for temporarily storing scanned data
 
   useEffect(() => {
     (async () => {
@@ -33,13 +34,11 @@ const QRCodeScanner = ({ navigation }) => {
 
   const handleBarCodeScanned = async ({ type, data }) => {
     setIsLoading(true);
-
-    console.log('Scanned Data:', data);
-    console.log('Token:', token);
+    setScannedData(data); // Temporarily store scanned data
 
     try {
       const response = await axios.post(
-        'https://24b5-102-70-6-135.ngrok-free.app/api/scan-attendance',
+        'https://f6f6-105-234-166-13.ngrok-free.app/api/scan-attendance',
         {
           qrCodeData: data,
         },
@@ -61,6 +60,7 @@ const QRCodeScanner = ({ navigation }) => {
       }
     } finally {
       setIsLoading(false);
+      setScannedData(null); // Clear scanned data after processing
     }
   };
 
