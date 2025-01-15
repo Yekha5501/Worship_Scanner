@@ -38,7 +38,7 @@ const QRCodeScanner = ({ navigation }) => {
 
     try {
       const response = await axios.post(
-        'https://f6f6-105-234-166-13.ngrok-free.app/api/scan-attendance',
+        'https://phplaravel-1397226-5183104.cloudwaysapps.com/api/scan-attendance',
         {
           qrCodeData: data,
         },

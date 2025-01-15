@@ -25,7 +25,7 @@ const InputsCard = React.memo(() => {
   const handleLogin = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.post('https://f6f6-105-234-166-13.ngrok-free.app/api/login', {
+      const response = await axios.post('https://phplaravel-1397226-5183104.cloudwaysapps.com/api/login', {
         email,
         password,
       });

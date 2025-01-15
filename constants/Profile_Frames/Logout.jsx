@@ -17,7 +17,7 @@ const LogoutButton = () => {
       
       // If token exists, proceed with logout request
       if (token) {
-        const response = await axios.post('https://f6f6-105-234-166-13.ngrok-free.app/api/logout', {}, {
+        const response = await axios.post('https://phplaravel-1397226-5183104.cloudwaysapps.com/api/logout', {}, {
           headers: {
             Authorization: `Bearer ${token}`
           }

@@ -1,6 +1,5 @@
-// ScanButton.jsx
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Alert, TouchableOpacity } from 'react-native';
 import tw from 'twrnc';
 import { useRouter } from 'expo-router';
 
@@ -8,6 +7,7 @@ const ScanButton = () => {
   const router = useRouter();
 
   const handlePress = () => {
+    // Navigate to the scanner page
     router.push('/scanner/ScannerScreen');
   };
 
@@ -22,9 +22,9 @@ const ScanButton = () => {
         onPress={handlePress}
       >
         <View style={tw`w-full h-full bg-cover bg-center rounded-full`}>
-          
+          {/* Add your custom image or styling */}
         </View>
-        <Text style={tw`absolute  right-0 bottom-0 text-2xl font-bold mr-9 mb-11`}>Scan</Text>
+        <Text style={tw`absolute right-0 bottom-0 text-2xl font-bold mr-9 mb-11`}>Scan</Text>
       </TouchableOpacity>
     </View>
   );
