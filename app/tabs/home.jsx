@@ -12,8 +12,11 @@ const Home = () => {
   const [loggedOut, setLoggedOut] = useState(false);
   const router = useRouter();
 
-  const handlePress = () => {
-    // Navigate to the scanner page
+  const handleOfflineScannerPress = () => {
+    router.push('/scanner/OfflineScanner');
+  };
+
+  const handleOnlineScannerPress = () => {
     router.push('/scanner/ScannerScreen');
   };
 
@@ -21,20 +24,15 @@ const Home = () => {
     setLoading(true);
     try {
       const token = await AsyncStorage.getItem('userToken');
-      
-      // If token exists, proceed with logout request
       if (token) {
-        const response = await axios.post('https://phplaravel-1397226-5183104.cloudwaysapps.com/api/logout', {}, {
+        const response = await axios.post('https://51e4-105-234-160-30.ngrok-free.app/api/logout', {}, {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         if (response.status === 200) {
-          // Clear user token from AsyncStorage
           await AsyncStorage.removeItem('userToken');
-          
-          // Set loggedOut to true to trigger the redirect
           setLoggedOut(true);
         }
       } else {
@@ -54,27 +52,42 @@ const Home = () => {
   return (
     <SafeAreaView style={tw`flex-1 bg-gradient-to-b from-blue-100 to-blue-300`}>
       {/* App Bar (Header) */}
-      <View style={tw`bg-blue-400 p-4`}>
-        <Text style={tw`text-gray-100 text-3xl font-semibold text-center`}>Worship Scan</Text>
+      <View style={tw`bg-blue-500 p-4 shadow-md`}>
+        <Text style={tw`text-white text-2xl font-bold text-center`}>Worship Scan</Text>
       </View>
 
-      {/* Main Content Section */}
+      {/* Main Content */}
       <View style={tw`flex-1 justify-center items-center px-6`}>
-        <Text style={tw`text-gray-800 text-lg text-center mb-12`}>
+        <Text style={tw`text-gray-800 text-base text-center mb-8`}>
           Scan QR codes to mark attendance for worship sessions
         </Text>
-        <TouchableOpacity
-          style={tw`bg-ora-800 w-48 h-48 rounded-full shadow-xl items-center justify-center mt-12`}
-          onPress={handlePress}
-        >
-          <Text style={tw`text-4xl font-semibold text-gray-800`}>Press</Text>
-        </TouchableOpacity>
+
+        {/* Scanner Buttons */}
+        <View style={tw`flex-row justify-between w-full px-6`}>
+          {/* Online Scanner */}
+          <TouchableOpacity
+            style={tw`bg-blue-600 w-36 h-36 rounded-lg shadow-lg items-center justify-center`}
+            onPress={handleOnlineScannerPress}
+          >
+            <Icon name="qr-code-scanner" size={36} style={tw`text-white`} />
+            <Text style={tw`text-white text-sm font-semibold mt-2`}>Online Scan</Text>
+          </TouchableOpacity>
+
+          {/* Offline Scanner */}
+          <TouchableOpacity
+            style={tw`bg-green-600 w-36 h-36 rounded-lg shadow-lg items-center justify-center`}
+            onPress={handleOfflineScannerPress}
+          >
+            <Icon name="qr-code" size={36} style={tw`text-white`} />
+            <Text style={tw`text-white text-sm font-semibold mt-2`}>Offline Scan</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {/* Logout Button Section */}
-      <View style={tw`px-4`}>
+      {/* Logout Section */}
+      <View style={tw`px-6 mb-4`}>
         <TouchableOpacity
-          style={tw`border border-primary rounded-lg p-3 mt-4 flex-row items-center justify-center`}
+          style={tw`bg-white border border-gray-300 rounded-lg p-3 flex-row items-center justify-center shadow-sm`}
           onPress={handleLogout}
           disabled={loading}
         >
@@ -82,16 +95,16 @@ const Home = () => {
             <ActivityIndicator size="small" color="#1cc6ff" />
           ) : (
             <>
-              <Icon name="logout" size={20} style={tw`mr-2 text-primary`} />
-              <Text style={tw`text-primary font-bold text-base ml-20`}>Logout</Text>
+              <Icon name="logout" size={20} style={tw`text-blue-500 mr-2`} />
+              <Text style={tw`text-blue-500 font-bold text-base`}>Logout</Text>
             </>
           )}
         </TouchableOpacity>
       </View>
 
-      {/* Footer Section (Optional, for styling) */}
+      {/* Footer */}
       <View style={tw`px-6 py-4`}>
-        <Text style={tw`text-sm text-center text-gray-600 opacity-80`}>
+        <Text style={tw`text-sm text-center text-gray-500`}>
           Powered by Worship Attendance App
         </Text>
       </View>
