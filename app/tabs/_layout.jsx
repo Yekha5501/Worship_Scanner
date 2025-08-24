@@ -1,56 +1,32 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Tabs } from 'expo-router';
-import { Image, Text, View } from 'react-native';
-import tw from 'twrnc';
+import { Stack } from 'expo-router';
 
-const TabIcon = ({ icon, color, name, focused }) => {
-  return (
-    <View style={tw`flex items-center justify-center gap-2`}>
-      <Image
-        source={icon}
-        resizeMode="contain"
-        style={{ tintColor: color, width: 24, height: 24 }}
-      />
-      <Text style={[tw`${focused ? 'font-semibold' : 'font-regular'} text-xs`, { color }]}>
-        {name}
-      </Text>
-    </View>
-  );
-};
-
-const TabsLayout = () => {
+const RootLayout = () => {
   return (
     <>
       <StatusBar style="auto" />
-      <Tabs
+      <Stack
         screenOptions={{
-          tabBarActiveTintColor: '#00bfff',
-          tabBarInactiveTintColor: 'gray',
-          tabBarShowLabel: false,
-          tabBarStyle: tw`bg-white shadow-lg shadow-gray-500/50 rounded-t-xl border-t border-gray-200 h-15`,
-          tabBarIconStyle: tw`w-10 h-10`,
-          tabBarLabelStyle: tw`text-xs font-medium`,
+          headerShown: false,
         }}
       >
-        <Tabs.Screen
-          name="home"
-          options={{
-            title: 'Home',
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={require('../../assets/icons/home.png')} // Adjust the path as needed
-                color={color}
-                name="Home"
-                focused={focused}
-              />
-            ),
-          }}
+        <Stack.Screen 
+          name="index" 
+          options={{ 
+            headerShown: false 
+          }} 
         />
-      </Tabs>
+        <Stack.Screen 
+          name="scanner/OfflineScanner" 
+          options={{ 
+            headerShown: false,
+            presentation: 'modal'
+          }} 
+        />
+      </Stack>
     </>
   );
 };
 
-export default TabsLayout;
+export default RootLayout;

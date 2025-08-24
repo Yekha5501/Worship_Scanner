@@ -4,13 +4,18 @@ import tw from '../../lib/tailwind';
 import { Redirect } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 
 const InputsCard = React.memo(() => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+
+  // Mock credentials (you can add more users if needed)
+  const mockUser = {
+    email: 'worship@mchs.org',
+    password: '12345678',
+  };
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -25,17 +30,15 @@ const InputsCard = React.memo(() => {
   const handleLogin = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.post('https://51e4-105-234-160-30.ngrok-free.app/api/login', {
-        email,
-        password,
-      });
-
-      if (response.data.token) {
-        await AsyncStorage.setItem('userToken', response.data.token);
+      if (email === mockUser.email && password === mockUser.password) {
+        // Store a fake token (since no API is involved)
+        await AsyncStorage.setItem('userToken', 'mock_token_123');
         setLoggedIn(true);
+      } else {
+        Alert.alert('Login Failed', 'Invalid email or password');
       }
     } catch (error) {
-      Alert.alert('Login Failed', 'Invalid email or password');
+      Alert.alert('Error', 'Something went wrong');
     } finally {
       setLoading(false);
       setEmail('');
@@ -54,6 +57,7 @@ const InputsCard = React.memo(() => {
           <View style={tw`bg-gray-500 h-1 w-15 mb-6`} />
         </View>
         <Text style={tw`text-3xl font-bold mb-8 mt-4`}>Login</Text>
+
         <View style={tw`mb-4`}>
           <Text style={tw`text-sm font-bold mb-3`}>Email Address</Text>
           <TextInput
@@ -65,6 +69,7 @@ const InputsCard = React.memo(() => {
             autoCapitalize="none"
           />
         </View>
+
         <View style={tw`mb-2`}>
           <Text style={tw`text-sm font-bold mb-3`}>Password</Text>
           <TextInput
@@ -75,6 +80,7 @@ const InputsCard = React.memo(() => {
             onChangeText={setPassword}
           />
         </View>
+
         <TouchableOpacity
           style={tw`border-2 border-primary rounded-3xl p-3 mt-12 flex-row items-center justify-center`}
           onPress={handleLogin}
@@ -88,9 +94,6 @@ const InputsCard = React.memo(() => {
               <MaterialIcons name="arrow-forward" size={24} color="#1cc6ff" />
             </>
           )}
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-          <Text style={tw`text-gray-500 text-sm text-center font-bold mt-10`}>Forgot Password?</Text>
         </TouchableOpacity>
       </View>
     </View>
